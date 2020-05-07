@@ -17,8 +17,21 @@
 // serviceWorker.unregister();
 
 import React from "react";
+import "./app/layout/styles.css";
 import { render } from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from "./app/layout/App";
+import * as serviceWorker from "./serviceWorker";
 import "mobx-react-lite/batchingForReactDom";
+import ScrollToTop from "./app/layout/ScrollToTop";
 
-render(<App />, document.getElementById("root"));
+render(
+  <BrowserRouter>
+    <ScrollToTop>
+      <App />
+    </ScrollToTop>
+  </BrowserRouter>,
+  document.getElementById("root")
+);
+
+serviceWorker.unregister();
