@@ -19,5 +19,6 @@
 import React from "react";
 import { render } from "react-dom";
 import App from "./app/layout/App";
+import "mobx-react-lite/batchingForReactDom";
 
 render(<App />, document.getElementById("root"));
