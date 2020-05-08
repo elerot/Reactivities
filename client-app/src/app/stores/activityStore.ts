@@ -13,8 +13,23 @@ export class ActivityStore {
   @observable target = "";
 
   @computed get activitiesByDate() {
-    return Array.from(this.activityRegistry.values()).sort(
+    return this.groupActivitiesByDate(
+      Array.from(this.activityRegistry.values())
+    );
+  }
+
+  groupActivitiesByDate(activities: IActivity[]) {
+    const sortedActivities = activities.sort(
       (a, b) => Date.parse(a.date) - Date.parse(b.date)
+    );
+    return Object.entries(
+      sortedActivities.reduce((newGroupedActivitiesList, currentActivity) => {
+        const date = currentActivity.date.split("T")[0];
+        newGroupedActivitiesList[date] = newGroupedActivitiesList[date]
+          ? [...newGroupedActivitiesList[date], currentActivity]
+          : [currentActivity];
+        return newGroupedActivitiesList;
+      }, {} as { [key: string]: IActivity[] })
     );
   }
 
@@ -27,6 +42,7 @@ export class ActivityStore {
           activity.date = activity.date.split(".")[0];
           this.activityRegistry.set(activity.id, activity);
         });
+        console.log(this.groupActivitiesByDate(activities));
       });
       //this.loadingInitial = false;
     } catch (error) {
