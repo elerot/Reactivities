@@ -17,20 +17,25 @@
 // serviceWorker.unregister();
 
 import React from "react";
+import "react-toastify/dist/ReactToastify.min.css";
 import "./app/layout/styles.css";
 import { render } from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
 import App from "./app/layout/App";
 import * as serviceWorker from "./serviceWorker";
 import "mobx-react-lite/batchingForReactDom";
 import ScrollToTop from "./app/layout/ScrollToTop";
 
+export const history = createBrowserHistory();
+
 render(
-  <BrowserRouter>
+  <Router history={history}>
     <ScrollToTop>
       <App />
     </ScrollToTop>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById("root")
 );
 
